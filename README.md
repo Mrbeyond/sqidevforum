@@ -1,0 +1,1 @@
+This repo is basically for SQI college of ICT developers to relate and and get overflow of help. Students progress are monitored and and challenge posing would be rectified collectively. This is help over flow.
