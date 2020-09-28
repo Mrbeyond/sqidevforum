@@ -29,10 +29,10 @@ const userMiddleWare = {
   },
 
   /** This is the middleware for user sign up and update */
-  filterUserSignupAndUpdate: async(req, res, next)=>{
+  filterStudentSignup: async(req, res, next)=>{
     try {
       /** confirm the payload here */
-      let check = await validator.testUser(req.body);
+      let check = await validator.testStudent(req.body);
       if(!check) return commonMethods.errorReturn(res, 'Intruder');
       const {email, phone} = req.body;
       let pass = await userMiddleWare.checkStudent([email,phone]);
@@ -55,17 +55,17 @@ const userMiddleWare = {
       let check = await validator.testLogin(req.body);
       if(!check) return commonMethods.errorReturn(res, 'Intruder');
       /** confirm user here */
-      const User = await new Promise((resolve, reject)=>{
+      const Student = await new Promise((resolve, reject)=>{
         db.query(`SELECT * FROM students WHERE email=? LIMIT 1`, [req.body.email], (err, row, f)=>{
           if(err) reject(500);
           if(row.length < 1 ) reject(404);
           resolve(row); 
         })
       });
-      if(!User) return commonMethods.serverErrorReturn(res);
-      console.log(User, 122);
-      req.body.User = User[0];
-      console.log(req.body, 155);
+      if(!Student) return commonMethods.serverErrorReturn(res);
+      // console.log(Student, 122);
+      req.body.Student = Student[0];
+      // console.log(req.body, 155);
       next();
     } catch (e) {
       if(e === 500) return commonMethods.serverErrorReturn(res);
@@ -101,7 +101,7 @@ const userMiddleWare = {
         })
       });
       if(!studentExists) return commonMethods.errorReturn(res, "Please Login");
-      req.body.studentId = studentExists;
+      req.studentId = studentExists;
       next();
     } catch (e) {
 
@@ -110,6 +110,16 @@ const userMiddleWare = {
       /** return 500 error */
       return commonMethods.serverErrorReturn(res);
     }     
+  },
+
+  changeProfilePic: async(req, res)=>{
+    try {
+
+      /** To be completed later for */
+    
+    } catch (e) {
+    
+    }
   }
 
 }
