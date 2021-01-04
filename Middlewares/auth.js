@@ -6,7 +6,7 @@ require('dotenv').config();
 const {sql} = require('./../sql');
 const { resolve } = require('path');
 const db = sql();
-
+/** Jwt assigned string key inside env for encoding */
 const key = process.env.key;
 
 /** This middlewares for basic auth routes and student related auth data */
@@ -16,8 +16,7 @@ const userMiddleWare = {
   checkStudent: (data)=>{
     return new Promise((resolve, reject)=>{
       db.query(
-        `SELECT * FROM students WHERE email=? OR phone =? `,
-        data,
+        `SELECT * FROM students WHERE email=?`, data,
         (err, row, f)=>{
           if(err) reject(500)
           if(row.length > 0) reject('dup');
@@ -25,56 +24,23 @@ const userMiddleWare = {
         }
       )
     })
-
   },
 
   /** This is the middleware for user sign up and update */
-  filterStudentSignup: async(req, res, next)=>{
+  filterAuth: async(req, res, next)=>{
     try {
       /** confirm the payload here */
-      let check = await validator.testStudent(req.body);
-      if(!check) return commonMethods.errorReturn(res, 'Intruder');
-      const {email, phone} = req.body;
-      let pass = await userMiddleWare.checkStudent([email,phone]);
-      if(!pass) return commonMethods.serverErrorReturn(res);
+      let check = await validator.testAuth(req.body);
+      if(!check) return commonMethods.errorReturn(res, 'Intruder');      
       next();
     } catch (e) {
-      console.log(e, 'midman')
-      if(e === 500) return commonMethods.serverErrorReturn(res);
-      if(e === 'dup') return commonMethods.errorReturn(res, 'User Exists');
-
-      /** return 500 error */
-      return commonMethods.serverErrorReturn(res);
-    
+      console.log(e, 'midman')      /** return 500 error */
+      return commonMethods.serverErrorReturn(res);    
     }
   },
 
-  filterLogin: async(req, res, next)=>{
-    try {
-      /** confirm the payload here */
-      let check = await validator.testLogin(req.body);
-      if(!check) return commonMethods.errorReturn(res, 'Intruder');
-      /** confirm user here */
-      const Student = await new Promise((resolve, reject)=>{
-        db.query(`SELECT * FROM students WHERE email=? LIMIT 1`, [req.body.email], (err, row, f)=>{
-          if(err) reject(500);
-          if(row.length < 1 ) reject(404);
-          resolve(row); 
-        })
-      });
-      if(!Student) return commonMethods.serverErrorReturn(res);
-      // console.log(Student, 122);
-      req.body.Student = Student[0];
-      // console.log(req.body, 155);
-      next();
-    } catch (e) {
-      if(e === 500) return commonMethods.serverErrorReturn(res);
-      if(e === 404) return commonMethods.errorReturn(res, "User Not Found");
-      /** return 500 error */
-      return commonMethods.serverErrorReturn(res)
-    }
-  },
-
+ 
+  /** This is used to confirm the incoming request token in header to get the user */
   confirmToken: async(req, res, next)=>{
     try {
       let container = req.headers.authorization;

@@ -1,4 +1,4 @@
-"use strict";
+ "use strict";
 
 /** The student migration */
 const userTable = `CREATE TABLE IF NOT EXISTS students ( 
@@ -6,9 +6,9 @@ const userTable = `CREATE TABLE IF NOT EXISTS students (
   firstName VARCHAR(225) NOT NULL,
   lastName VARCHAR(225) NOT NULL,
   email VARCHAR(225) NOT NULL UNIQUE,
-  course VARCHAR(225) NOT NULL,
-  phone VARCHAR(30) NOT NULL UNIQUE,
-  gender VARCHAR(15) NOT NULL,
+  course VARCHAR(225),
+  phone VARCHAR(30) UNIQUE,
+  gender VARCHAR(15),
   profilePic VARCHAR(225),
   password VARCHAR(225) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

@@ -30,20 +30,18 @@ Weekly and monthly assessment of best problem solver with profiling point.
 
 This following part is for co-developers to have the glimpse of expected data on reach route.
 
-The basic student auth part
+The basic student auth part.
 
-Route: /signup
+At present only Google login is implemented for better augmentation and SQI API is 
+expected later in the future as well.
+
+Route: /auth (This main route handles login and signup together)
 incoming data: {
-  firstName, lastName, password, email, phoneNum, gender, course
+  firstName, lastName, password, email
 }
 response data: {student data, token}
 
 
-Route: /login
-incoming data: {
-  password, email
-}
-response data: {student data, token}
 
 Route: /logout
 incoming data: {
@@ -54,30 +52,11 @@ response data: {success code}
 Route: /update_student
 incoming data: {
   (auth header)
-  firstName, lastName, gender, course
+  firstName, lastName, gender, course, phoneNumber
 }
 response data: {student data}
 
-Route: /change_email
-incoming data: {
-  (auth header)
-  email
-}
-response data: {student data}
 
-Route: /change_password
-incoming data: {
-  (auth header)
-  password
-}
-response data: {success code}
-
-Route: /change_phone_number
-incoming data: {
-  (auth header)
-  phone
-}
-response data: {student data}
 
 
 

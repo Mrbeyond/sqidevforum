@@ -17,48 +17,21 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/api', Routers)
-app.get('/', async(req, res)=>{
-
-  // db.query('CREATE DATABASE IF NOT EXISTS sqi', (err,res,field)=>{
-  //   if(err) return console.log(err);
-  //   console.log(res, 'field is ', field);
-  // })
-
-  db.query(userTable, (err, res, field)=>{
-    if(err) return console.log(err);
-    console.log(res, 'field is ', field);
-  });
-
+app.get('/migrations/migrate', async(req, res)=>{
   try {
-    const data ={
-      email: 'mm@mm.cm',
-      // firstName: 'first',
-      // lastName: 'last',
-      // course: 'se',
-      // password: 'key',
-      phone: '0803',
-      // gender: 'male'
-
-    }
-    
-    // db.query(`INSERT INTO ?? SET ? `, ['students', data], (err, res, f)=>{
-    //   if(err) return console.log(err);
-    //   console.log(res);
-    // });
-  db.query(` SELECT * FROM students WHERE email=? OR phone = ?`, Object.values(data), (err, res, f)=>{
-    if(err) return console.log(err);
-    console.log(res);
-    
-  });
-  // const resu = await db.query(` SELECT * FROM students`);
-  //  console.log(Object.keys(resu));
-    // console.log(resu);
-  } catch (e) {
-    console.log('err');
+    db.query('CREATE DATABASE IF NOT EXISTS sqi', (err,res,field)=>{
+      if(err) return console.log(err);
+      console.log(res, 'field is ', field);
+    })
   
+    db.query(userTable, (err, res, field)=>{
+      if(err) return console.log(err);
+      console.log(res, 'field is ', field);
+    });
+  
+  } catch (e) {    
+    res.status(500).json(e);
   }
-
-  // console.log("Welcome to your community");
   res.status(200).json("Welcome to your community");
 })
 

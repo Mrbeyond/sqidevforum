@@ -22,6 +22,41 @@ const studentController = {
       return data;
   },
 
+
+  /** Create new student or log the existing student into the system */
+
+  authProcessor: async(req, res)=>{
+    try {
+      const checker = await new Promise((resolve, reject)=>{
+        db.query(
+          `SELECT * FROM students WHERE email=? LIMIT 1`, req.body.email,
+          (err, row, f)=>{
+            if(err) reject(500)
+            if(row.length > 0){
+              req.body.Student = row[0];
+              resolve (true);
+            }else{
+              resolve(false);
+            }
+          }
+        )
+      });
+
+      if(checker){
+        studentController.login(req, res);
+        console.log('\n old \n');
+      }else{
+        studentController.creatUser(req, res);
+        console.log('\n new \n');
+      }
+    } catch (e) {
+      console.log(e);
+      return commonMethods.serverErrorReturn(res);
+    }
+    
+
+  },
+
   /** The controller for user signup */
   creatUser: async (req, res) => {
     try {
@@ -38,12 +73,15 @@ const studentController = {
       try {
         let newStudentId = await new Promise((resolve, reject)=>{
           db.query(`INSERT INTO students SET ?`, req.body, (err, row, f)=>{
-            if(err) reject(500);
+            if(err){
+              console.log(err, 'is the error');
+              reject(500);
+            }               
             resolve(row.insertId);
           })
         })
 
-        /** Fetch out the saved student */
+        /** Fetch out the new created student */
         let student = await new Promise((resolve, reject)=>{
           db.query(`SELECT * FROM students WHERE id = ?`, newStudentId, (err, row, f)=>{
             if(err) reject(500);
