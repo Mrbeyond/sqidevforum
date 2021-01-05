@@ -56,7 +56,7 @@ const userMiddleWare = {
       }
 
       if(!studentId) return commonMethods.errorReturn(res, "Please Login");
-      console.log(studentId);
+      // console.log(studentId, "from mid");
       /** Check if student exists and fectch the student for request parsing */
       let studentExists = await new Promise((resolve, reject)=>{
         db.query(`SELECT * FROM students WHERE id = ? LIMIT 1`, studentId.data, (err, row, f)=>{

@@ -1,18 +1,27 @@
 "use strict";
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const {userTable} = require('./Migrations/Tables');
 const {sql} = require('./sql');
+const cors = require('cors');
 const db = sql();
 const Routers = require('./Routes/index');
 
 // console.log(userTable);
 const app = express();
 dotenv.config();
-app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+const corsOptions = {
+  "origin": ["http://localhost:8080"],
+  "methods": "GET,HEAD,POST",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 200,
+};
+
+app.use(cors(corsOptions))
 
 
 
