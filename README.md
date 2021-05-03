@@ -49,6 +49,12 @@ incoming data: {
 }
 response data: {success code}
 
+Route: /reget_student (Evalute and get auth student, used in the store's action in front end to get auth student in case of refresh or to force login if not logged in)
+incoming data: {
+  (auth header)
+}
+response data: {student data}
+
 Route: /update_student
 incoming data: {
   (auth header)

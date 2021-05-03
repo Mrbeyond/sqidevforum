@@ -8,6 +8,18 @@ Router.get('/logout', middleware.confirmToken, controller.logOut);
 Router.get('/reget_student', middleware.confirmToken, controller.getStudent);
 
 Router.post('/update_student', middleware.confirmToken, controller.updateStudent);
+Router.get('/and_get', (req, res)=>{
+    return res.status(200).json({success: true, data:[
+        {one:1, two:'2'},
+        {one:1, two:'21'},
+        {one:1, two:'22'},
+        {one:1, two:'23'},
+        {one:1, two:'24'},
+        {one:1, two:'25'},
+        {one:1, two:'26'},
+        {one:1, two:'27'}
+    ]});
+})
 
 
 // Router.post('/change_email', middleware.confirmToken, controller.changeEmail);

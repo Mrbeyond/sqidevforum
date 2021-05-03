@@ -25,15 +25,14 @@ const formValidators = {
       await formValidators.authValidators.validateAsync(payload);
       return true;
     } catch (e) {
-      console.log(e)
+      // console.log(e)
      return false;
     }
   },
 
 
   basicUpdateValidators: joi.object({
-    firstName: joi.string().required(),
-    lastName: joi.string().required(),
+    phone: joi.string().required(),
     course: joi.string().required(),
     gender: joi.string().valid(...['Male', 'Female']).required()
 
@@ -44,7 +43,7 @@ const formValidators = {
       await formValidators.basicUpdateValidators.validateAsync(payload);
       return true;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       return false;
     }
   },
@@ -60,7 +59,7 @@ const formValidators = {
       await formValidators.changeEmailValidators.validateAsync(payload);
       return true;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       return false;
     }
   },
@@ -76,7 +75,7 @@ const formValidators = {
       await formValidators.changePasswordValidators.validateAsync(payload);
       return true;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       return false;
     }
   },
@@ -92,7 +91,7 @@ const formValidators = {
       await formValidators.changePhoneValidators.validateAsync(payload);
       return true;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       return false;
     }
   },
