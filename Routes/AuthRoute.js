@@ -2,6 +2,7 @@
 const middleware = require('./../Middlewares/auth');
 const controller = require('./../controllers/AuthController');
 const Router = require('express').Router();
+const {io} = require('./../RealTime');
 
 Router.post('/auth', middleware.filterAuth, controller.authProcessor );
 Router.get('/logout', middleware.confirmToken, controller.logOut);
@@ -9,6 +10,8 @@ Router.get('/reget_student', middleware.confirmToken, controller.getStudent);
 
 Router.post('/update_student', middleware.confirmToken, controller.updateStudent);
 Router.get('/and_get', (req, res)=>{
+
+    io.sockets.emit("checkout", {a:1,b:12,c:"from controller"});
     return res.status(200).json({success: true, data:[
         {one:1, two:'2'},
         {one:1, two:'21'},
