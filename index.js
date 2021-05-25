@@ -21,7 +21,7 @@ const corsOptions = {
   "optionsSuccessStatus": 200,
 };
 
-const db_holder = process.env.CLEARDB_DATABASE_URL;
+const db_holder = process.env.db;
 
 app.use(cors(corsOptions));
 
