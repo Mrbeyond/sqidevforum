@@ -28,12 +28,14 @@ const studentController = {
   authProcessor: async(req, res)=>{
     try {
       const checker = await new Promise((resolve, reject)=>{
+        console.log(req.body.email)
         db.query(
           `SELECT * FROM students WHERE email=? LIMIT 1`, req.body.email,
           (err, row, f)=>{
             if(err) reject(500)
             if(row.length > 0){
               req.body.Student = row[0];
+              console.log(row[0]);
               resolve (true);
             }else{
               resolve(false);
