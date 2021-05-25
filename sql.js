@@ -1,17 +1,20 @@
 const mysql = require('mysql');
 require('dotenv').config();
 
-module.exports = {
-  sql : ()=>{
-    /** Manual live configuration */
-    const con = mysql.createConnection(
-      {
-        host: process.env.host,
-        user: process.env.user,
-        password: process.env.password,
-        database: process.env.db
-      }
-    )
+const parseDbUrl = require("parse-database-url");
+
+// const dbConfig = parseDbUrl(process.env.CLEARDB_DATABASE_URL);
+
+const db_config =  {
+  host: process.env.host,
+  user: process.env.user,
+  password: process.env.password,
+  database: process.env.db
+}
+
+const sql=()=>{
+  /** Manual live configuration */
+    // const con = mysql.createConnection(db_config);
 
     /** Manual local configuration */
     // const con = mysql.createConnection(
@@ -24,10 +27,15 @@ module.exports = {
     // )
 
     /** String live configuration */
-    // const con = mysql.createConnection("mysql://baa35a2f5a2897:8f1a9020@us-cdbr-east-03.cleardb.com/heroku_c2bf43a6f947987?reconnect=true")
-    // const con = mysql.createConnection(process.env.CLEARDB_DATABASE_URL)
-    con.connect();
+    // const con = mysql.createConnection(dbConfig);
+    const con = mysql.createPool(process.env.CLEARDB_DATABASE_URL);
+    // con.getConnection(function(err, connection) {
+    //   if (err) throw err;
+    //   con = connection;
+    // });
 
-    return con;
-  },
+    return con
 }
+
+// console.log(dbConfig);
+module.exports = { sql }

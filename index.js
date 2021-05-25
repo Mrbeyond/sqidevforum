@@ -32,15 +32,20 @@ app.use('/api', Routers)
 
 app.get('/migrations/migrate', async(req, res)=>{
   try {
-    db.query(`CREATE DATABASE IF NOT EXISTS ${db_holder}`, (err,res,field)=>{
-      if(err) return console.log(err);
-      console.log(res, 'field is ', field);
+    db.getConnection((err, con)=>{
+      if (err) throw err;
+      con.query(`CREATE DATABASE IF NOT EXISTS ${db_holder}`, (err,res,field)=>{
+        if(err) return console.log(err);
+        console.log(res, 'field is ', field);
+      })
+    
+      con.query(userTable, (err, res, field)=>{
+        if(err) return console.log(err);
+        console.log(res, 'field is ', field);
+      });
+
+
     })
-  
-    db.query(userTable, (err, res, field)=>{
-      if(err) return console.log(err);
-      console.log(res, 'field is ', field);
-    });
   
   } catch (e) {    
     res.status(500).json(e);
