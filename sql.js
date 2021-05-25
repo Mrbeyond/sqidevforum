@@ -22,7 +22,7 @@ module.exports = {
     //     database: process.env.db_local
     //   }
     // )
-    
+
     /** String live configuration */
     const con = mysql.createConnection(process.env.CLEARDB_DATABASE_URL)
     con.connect();
