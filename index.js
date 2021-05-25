@@ -15,13 +15,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const corsOptions = {
-  // "origin":["http://localhost:8080", "http://127.0.0.1:8081"], //"*" ,
-  // "methods": "GET,HEAD,POST",
-  // "preflightContinue": false,
-  // "optionsSuccessStatus": 200,
+  "origin":["http://localhost:8080", "http://127.0.0.1:8081"], //"*" ,
+  "methods": "GET,HEAD,POST",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 200,
 };
 
-app.use(cors())
+app.use(cors(corsOptions));
 
 
 
