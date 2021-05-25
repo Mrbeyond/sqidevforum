@@ -24,7 +24,8 @@ module.exports = {
     // )
 
     /** String live configuration */
-    const con = mysql.createConnection(process.env.CLEARDB_DATABASE_URL)
+    const con = mysql.createConnection("mysql://baa35a2f5a2897:8f1a9020@us-cdbr-east-03.cleardb.com/heroku_c2bf43a6f947987?reconnect=true")
+    // const con = mysql.createConnection(process.env.CLEARDB_DATABASE_URL)
     con.connect();
 
     return con;
