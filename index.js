@@ -49,7 +49,7 @@ app.get('/', async(req,res)=>{
 })
 
 
-server.listen(process.env.port || 2050, ()=>{
+server.listen(process.env.PORT || 2050, ()=>{
   console.log("Running on 2050");
 })
 
