@@ -5,11 +5,12 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:8080", //"*",
+  cors:  {
+    origin: "*",
+    // origin: ["http://localhost:8080"],
     methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
-    credentials: true
+    // allowedHeaders: ["my-custom-header"],
+    // credentials: true
   }
 });
 
