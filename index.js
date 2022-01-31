@@ -1,4 +1,4 @@
-"use strict";
+ "use strict";
 
 const dotenv = require('dotenv');
 const {userTable} = require('./Migrations/Tables');
@@ -19,7 +19,12 @@ app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'public')));
 
 const corsOptions = {
-  "origin":["http://localhost:8080", "http://localhost:3000", "http://127.0.0.1:8081"], //"*" ,
+  "origin":[
+    "http://localhost:8080",
+    "http://localhost:3000", 
+    "http://127.0.0.1:8081",
+    "http://localhost:8081"
+  ], //"*" ,
   "methods": "GET,HEAD,POST,PUT,DELETE",
   "preflightContinue": false,
   "optionsSuccessStatus": 200,
@@ -44,7 +49,7 @@ app.get('/migrations/migrate', async(req, res)=>{
       })
     
       con.query(userTable, (err, res, field)=>{
-        if(err) return console.log(err);
+        if(err) return console.log(err); 
         console.log(res, 'field is ', field);
       });
 
@@ -58,10 +63,13 @@ app.get('/migrations/migrate', async(req, res)=>{
 })
 
 app.get('/', async(req,res)=>{
+  
+  console.log(req.headers);
   res.status(200).json('111');
 })
 
-app.get('/', async(req,res)=>{
+app.post('/post', async(req,res)=>{
+  console.log(typeof req.body);
   res.status(200).json('111');
 })
 

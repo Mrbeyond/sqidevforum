@@ -125,16 +125,16 @@ const generalChatTable = ` CREATE TABLE IF NOT EXISTS general_chats(
 )`;
 
 module.exports = {
-  userTable: userTable,
-  statusTable: statusTable,
-  statusFileTable: statusFileTable,
-  statusCommentTable: statusCommentTable,
-  languageTable: languageTable,
-  stackTable: stackTable,
-  stackProgressTable: stackProgressTable,
-  projectTable: projectTable,
-  projectProgressTable: projectProgressTable,
-  projectCollaboratorTable: projectCollaboratorTable,
-  privateChatTable: privateChatTable,
-  generalChatTable: generalChatTable,  
+  userTable,
+  statusTable,
+  statusFileTable,
+  statusCommentTable,
+  languageTable,
+  stackTable,
+  stackProgressTable,
+  projectTable,
+  projectProgressTable,
+  projectCollaboratorTable,
+  privateChatTable,
+  generalChatTable,  
 };
